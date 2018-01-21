@@ -32,20 +32,21 @@ def main():
     render_text(screen)
 
     i = 40
-    hop = 2
-    new_val = prev_val = 0
+    hop = 1
+    v = lv = 0
     while quit is False:
         quit = event_handler()
 
         data = e.get_sample()
         if data:
             for i1,channel in enumerate(e.channel_mask):
-                if channel == "F3":
-                    print "%10s: %.2f %20s: %.2f" % (channel, data[i1]*100/5000 , "Quality", e.quality[channel])
-                    new_val = data[i1]*100/5000 - 50
+                print "%10s: %.5f %.5f %20s: %.2f" % (channel, data[i1], data[i1]*100/5000 , "Quality", e.quality[channel])
+                v = data[i1]*75/5000.0 - 50
+                l = (i1/14.0)*screen_height
+                pygame.draw.line(screen, red, [i, l - lv], [i+hop,l - v], 1)
+            print "----"
 
-        pygame.draw.line(screen, red, [i, 500 + prev_val], [i+hop,500 + new_val], 1)
-        prev_val = new_val
+        lv = v
         i += hop
         pygame.display.update()
         fpsClock.tick(fps)
