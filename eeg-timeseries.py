@@ -14,11 +14,13 @@ def event_handler():
             return True
     return False
 
-
+signals = ['F3', 'FC5', 'AF3', 'F7', 'T7', 'P7', 'O1', 'O2', 'P8', 'T8', 'F8', 'AF4', 'FC6', 'F4']
 def render_text( screen ):
     myfont = pygame.font.SysFont('Comic Sans MS', 30)
-    textsurface = myfont.render('F3', False, (255, 255, 255))
-    screen.blit(textsurface,(0,480))
+    for x in range(0, len(signals)):
+        textsurface = myfont.render(signals[x], False, (255, 255, 255))
+        l = (x/14.0)*screen_height
+        screen.blit(textsurface,(5,l+20))
 
 def main():
     quit = False
@@ -31,7 +33,7 @@ def main():
     pygame.display.set_caption("Emotiv Viewer")
     render_text(screen)
 
-    i = 40
+    i = 50
     hop = 1
     v = lv = 0
     while quit is False:
@@ -53,7 +55,7 @@ def main():
 
         if i == screen_with:
             screen.fill((0,0,0))
-            i=40
+            i=50
             render_text(screen)
 
 
